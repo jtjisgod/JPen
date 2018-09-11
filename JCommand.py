@@ -4,12 +4,18 @@ from terminaltables import AsciiTable
 class JCommand:
 
     def __init__(self):
+        self.history = []
         self.commands = {
             "help" : {
                 "title" : "Shows helps",
                 "description" : "Shows manuals",
                 "run" : self.help
             },
+            "history" : {
+                "title" : "Shows command history",
+                "description" : "Shows history",
+                "run" : self.showHistory
+            }
         }
         for d in os.scandir("./Commands/") :
             if ".py" not in d.name :
@@ -34,19 +40,43 @@ class JCommand:
             table.append(tr)
 
         asciiTable = AsciiTable(table)
-        asciiTable.title = "DAOGI HELP"
+        asciiTable.title = "JPEN COMMAND HELP"
         print(asciiTable.table)
     
+    def showHistory(self, args=[]) :
+        if len(args) == 1 :
+            try :
+                i = int(args[0])
+            except :
+                print("Insert only number.")
+                return
+            try :
+                self.control(self.history[i])
+            except :
+                print("Out of index.. Please check history index.")
+            return
+        for i in range(0, len(self.history)) :
+            print("\t#%04d %s"%(i, self.history[i]))
+
     def control(self, command) :
-        if not command.strip() :
+
+        command = command.strip()
+
+        if command == "q" :
             return False
+        
+        if not command.strip() :
+            return True
+
+        self.history.append(command)
 
         command = command.split(" ") if " " in command else [command, ]
 
         if command[0] not in self.commands.keys() :
             print("Invalid Command [ %s ]"%(command[0]))
-            return False
+            return True
  
         commandObject = self.commands[command[0]]
         if type(commandObject) == dict : commandObject['run'](command[1:])
         else : commandObject.run(command[1:])
+        return True

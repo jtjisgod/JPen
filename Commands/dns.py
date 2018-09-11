@@ -30,3 +30,4 @@ class Command(Cmd.Command) :
         dns = JDns.JDns(command[0])
         dns.run()
         print(dns.pretty())
+        

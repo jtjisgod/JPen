@@ -12,11 +12,12 @@ class JDns :
         2 : "a"
     }
 
-    def __init__(self, domain, dnsServer = "8.8.8.8", lifeTime = 10, timeOut = 10, dictionary="/assets/subdomains.txt") :
+    def __init__(self, domain, dnsServer = "8.8.8.8", lifeTime = 10, timeOut = 10) :
         self.domain = domain
         self.dnsServer = dnsServer
         self.lifeTime = lifeTime
         self.timeOut = timeOut
+        self.domains = []
     
     def run(self) :
         return self.dns(self.domain)
@@ -41,12 +42,16 @@ class JDns :
                 ip = str(rdata.address)
                 domains.append((2, ip))
         except :
-            domains.append([])
+            # domains.append([])
+            pass
         self.domains = domains
         return domains
 
     def pretty(self) :
         l = []
         for domain in self.domains :
-            l.append("[ %s ] %s"%(self.types[domain[0]].upper(), domain[1]))
+            try :
+                l.append("[ %s ] %s"%(self.types[domain[0]].upper(), domain[1]))
+            except :
+                pass
         return "\n => ".join(l)

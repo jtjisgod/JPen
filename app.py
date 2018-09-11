@@ -16,12 +16,11 @@ from JEnum import JEnum
 
 def main() :
     interactiveMode()
-
     domains = JFIO.readFile2Line(JEnum.domainFile)
     mJDomain = JDomain.JDomain(domains)
     mJCommand = JCommand.JCommand()
-    while True :
-        mJCommand.control(input("DAOGI >> "))
+    while mJCommand.control(input("JPen >> ")) :
+        pass
     
 
 def interactiveMode() :

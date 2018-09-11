@@ -37,9 +37,7 @@ class JThread :
                 break
             try : param = self.params.pop()
             except : break
-            self.response[str(param)] = {
-                str(param) : self.func(param)
-            }
+            self.response[str(param)] = self.func(param)
     
     def getResponse(self) :
         return self.response
