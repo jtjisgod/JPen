@@ -52,8 +52,8 @@ class Command(Cmd.Command) :
             return
         elif len(command) == 2 :
             if command[0] == "create" :
-                mJTarget = JTarget.JTarget(command[0])
-                mJTarget.element("domain", command[0])
+                mJTarget = JTarget.JTarget(command[1])
+                mJTarget.element("domain", command[1])
                 return
             elif command[0] == "remove" :
                 filename = JEnum.targets + command[1] + ".bin"

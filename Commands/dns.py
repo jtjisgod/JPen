@@ -27,7 +27,13 @@ class Command(Cmd.Command) :
         if len(command) == 0 :
             self.printUsage()
             return
-        dns = JDns.JDns(command[0])
-        dns.run()
-        print(dns.pretty())
-        
+        if "*." in command[0] :
+            dns = JDns.JDns(command[0])
+            dns.run()
+            print(dns.pretty())
+            return
+        else :
+            dns = JDns.JDns(command[0])
+            dns.run()
+            print(dns.pretty())
+            return

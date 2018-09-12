@@ -4,6 +4,13 @@ from terminaltables import AsciiTable
 class JCommand:
 
     def __init__(self):
+        self.shell = (
+            "clear",
+            "ls",
+            "cat",
+            "curl",
+            
+        )
         self.history = []
         self.commands = {
             "help" : {
@@ -71,6 +78,10 @@ class JCommand:
         self.history.append(command)
 
         command = command.split(" ") if " " in command else [command, ]
+
+        if command[0] in self.shell :
+            os.system(" ".join(command))
+            return True
 
         if command[0] not in self.commands.keys() :
             print("Invalid Command [ %s ]"%(command[0]))

@@ -1,4 +1,5 @@
 import os
+import pickle
 
 def readFile(filename) :
     f = open(filename, "r")
@@ -15,3 +16,9 @@ def getFileList(directory, nameFilter=lambda x: True) :
         if nameFilter(d.name) :
             lists.append(directory + "/" + d.name)
     return lists
+
+def readPickle(filename) :
+    f = open(filename, "rb")
+    p = pickle.load(f)
+    f.close()
+    return p

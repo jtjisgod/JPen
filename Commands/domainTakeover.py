@@ -1,5 +1,8 @@
 import Command as Cmd
 import JTarget
+import JFIO
+import JEnum
+import JDto
 
 class Command(Cmd.Command) :
 
@@ -27,7 +30,9 @@ class Command(Cmd.Command) :
         if len(command) == 0 :
             self.printUsage()
             return
-        mJTarget = JTarget.JTarget(command[1])
-        
-        print("Di")
+        mJTarget = JTarget.JTarget(command[0])
+        mJDto = JDto.JDto(mJTarget.element("domain"))
+        if mJDto.run() == False :
+            print("Please run 'subdomain' firstly.")
+            return
         

@@ -1,7 +1,9 @@
 import JDns
 import JThread      # Simple Thread Module
 import JFIO
+import JEnum
 import pickle
+import os
 
 class JSubdomainFinder :
 
