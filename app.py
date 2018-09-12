@@ -9,7 +9,7 @@ import JGui         # For Web Mode
 import JDns         # DNS Digging tool
 
 # Setting
-from JEnum import JEnum
+import JEnum
 
 def main() :
     mJCommand = JCommand.JCommand()

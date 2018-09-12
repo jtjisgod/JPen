@@ -1,4 +1,4 @@
-
+import os
 
 def readFile(filename) :
     f = open(filename, "r")
@@ -8,3 +8,10 @@ def readFile(filename) :
 
 def readFile2Line(filename) :
     return readFile(filename).split("\n")
+
+def getFileList(directory, nameFilter=lambda x: True) :
+    lists = []
+    for d in os.scandir(directory) :
+        if nameFilter(d.name) :
+            lists.append(directory + "/" + d.name)
+    return lists

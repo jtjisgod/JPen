@@ -1,5 +1,8 @@
 import Command as Cmd
 import JSubdomainFinder
+import JTarget
+import JFIO
+import JEnum
 from terminaltables import AsciiTable
 import os
 
@@ -26,14 +29,17 @@ class Command(Cmd.Command) :
             self.printUsage()
             return
         
-        dictionary = "./assets/subdomains/"
-        
+        if "*." not in command[0] :
+            self.printUsage()
+            return
+                
+        files = JFIO.getFileList(JEnum.subdomains, lambda x : x.endswith(".txt"))
+
         dicts = []
         cnt = 1
-        for file in os.scandir("./assets/subdomains/") :
-            if file.name[-4::] == ".txt" :
-                dicts.append([cnt, file.name])
-                cnt += 1
+        for f in files :
+            dicts.append([cnt, f])
+            cnt += 1
 
         table = [["#", "Subdomain Seed File Name"]]
         table.extend(dicts)
@@ -44,20 +50,31 @@ class Command(Cmd.Command) :
             print(asciiTable.table)
             try :
                 idx = int(input(">>> ")) - 1
-                dictionary += dicts[idx][1]
+                dictionary = dicts[idx][1]
                 break
             except :
                 continue
 
         mJSubdomainFinder = JSubdomainFinder.JSubdomainFinder(command[0], dictionary=dictionary)
-        res = mJSubdomainFinder.run()
+
+        res = {}
+        if mJSubdomainFinder.isExist() :
+            if input("Already finded data exist. Do you want to re-finding? (y/N)>> ").upper() == "Y" :
+                res = mJSubdomainFinder.run()
+            else :
+                res = mJSubdomainFinder.isExist()
+        else : 
+                res = mJSubdomainFinder.run()
 
         cnt = 1
         table = [["#", "DOMAIN"]]
         for k, v in res.items() :
-            if v :
+            if len(v) >= 2 :
                 table.append([cnt, k])
                 cnt += 1
+
+        mJTarget = JTarget.JTarget(command[0].split("*.")[-1])
+        mJTarget.setter("subdomain", cnt)
 
         asciiTable = AsciiTable(table)
         asciiTable.title = "Subdomain List"
