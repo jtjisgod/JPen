@@ -4,6 +4,7 @@ assets = "./assets/"
 targets = assets + "targets/"
 subdomains = assets + "subdomains/"
 domains = assets + "domains/"
+takeover = assets + "takeover/"
 dto = assets = "dto/"
 
 # Target Information

@@ -98,15 +98,16 @@ class JDto :
 
     def getHTML(self, url) :
         try :
-            return requests.get("http://" + url, timeout=3)
+            return requests.get("http://" + url, timeout=3).text
         except :
             try :
-                return requests.get("https://" + url, timeout=3)
+                return requests.get("https://" + url, timeout=3).text
             except :
                 return ""
         return ""
     
     def check(self, domain) :
+        print("Checking ... %s"%(domain))
         res = self.getHTML(domain)
         for response in self.response :
             if response in res :
@@ -129,7 +130,4 @@ class JDto :
         mJThread = JThread.JThread(self.check, domains, 200)
         mJThread.run()
         exploitable = mJThread.response
-
-        print(exploitable)
-
         return exploitable

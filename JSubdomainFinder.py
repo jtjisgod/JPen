@@ -51,7 +51,7 @@ class JSubdomainFinder :
         self.total = len(domains)
         self.progress = 0
 
-        mJThread = JThread.JThread(self.isExistSubdomain, domains, count=250)
+        mJThread = JThread.JThread(self.isExistSubdomain, domains, count=200)
         mJThread.run()
         self.response = mJThread.getResponse()
 

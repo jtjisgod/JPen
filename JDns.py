@@ -12,7 +12,7 @@ class JDns :
         2 : "a"
     }
 
-    def __init__(self, domain, dnsServer = "8.8.8.8", lifeTime = 10, timeOut = 10) :
+    def __init__(self, domain, dnsServer = "8.8.8.8", lifeTime = 10, timeOut = 3) :
         self.domain = domain
         self.dnsServer = dnsServer
         self.lifeTime = lifeTime
