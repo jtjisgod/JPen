@@ -30,10 +30,14 @@ class Command(Cmd.Command) :
     def run(self, command=[]) :
         if len(command) != 1 :        
             self.printUsage()
-        if not os.path.exists(command[1]) :
+            return
+        if not os.path.exists(command[0]) :
             print("Error.. No such file or directory")
             return
-        for domain in JFIO.readFile2Line(command[1]) :
-            print(domain)
-        return
-        
+        for domain in JFIO.readFile2Line(command[0]) :
+            if domain.strip() == "" :
+                continue
+            if "*." in domain :
+                domain = domain.split("*.")[-1]
+            print("Added >> " + domain)
+            JTarget.JTarget(domain)
